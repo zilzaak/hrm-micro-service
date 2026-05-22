@@ -1,12 +1,11 @@
 package hrm.auth.security.auth.service;
 
 import hrm.auth.backendUrl.repository.BackendUrlRepository;
+import hrm.auth.common.util.CommonUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,14 +29,7 @@ public class DynamicAuthorizationFilter extends OncePerRequestFilter {
 
         boolean hasPermissionToAccess = false;
 
-        if (request.getRequestURI().contains("/swagger-ui") ||
-                request.getRequestURI().contains("/api-docs") ||
-                request.getRequestURI().contains("/v3/api-docs") ||
-                request.getRequestURI().contains("/swagger-resources") ||
-                request.getRequestURI().contains("/webjars") ||
-                request.getRequestURI().equals("/swagger-ui.html") ||
-                request.getRequestURI().contains("/configuration/ui") ||
-                request.getRequestURI().contains("/configuration/security")) {
+        if (CommonUtil.isUrlOpenToAll(request.getRequestURI())) {
                 hasPermissionToAccess = true;
         }else{
             Long requestedUrlId = this.backendUrlRepository.findByNameAndHttpMethod(request.getRequestURI(),request.getMethod()).getId();

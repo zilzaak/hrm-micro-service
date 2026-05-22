@@ -37,17 +37,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> {
-                    // Allow Swagger UI and API docs without authentication
-                    authorize.requestMatchers(
-                            "/swagger-ui/**",
-                            "/swagger-ui.html",
-                            "/api-docs/**",
-                            "/v3/api-docs/**",
-                            "/swagger-resources/**",
-                            "/webjars/**"
-                    ).permitAll();
-                    // All other requests - let our custom filter handle
                     authorize.anyRequest().permitAll();
+                    // All other requests - let our custom filter handle
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Add exception handling for access denied
@@ -64,7 +55,6 @@ public class SecurityConfig {
         // Correct filter order: JWT first, then our authorization
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(dynamicAuthorizationFilter, JwtRequestFilter.class);
-
         return http.build();
     }
 

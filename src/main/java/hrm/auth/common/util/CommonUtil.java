@@ -16,9 +16,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 @Component
-public class CommonUtil {
-
-
+public  class CommonUtil {
 
     public static List<String> bulkStrToList(String bulkStr){
         List<String> list = new ArrayList<>();
@@ -29,6 +27,24 @@ public class CommonUtil {
         list = Arrays.asList(arr);
         return list;
     }
+    public static final List<String> openUrlsLike = Arrays.asList(
+            "/auth/getToken",
+            "/swagger-ui",
+            "/api-docs",
+            "/v3/api-docs",
+            "/swagger-resources",
+            "/webjars",
+            "/configuration/ui",
+            "/configuration/security"
+            );
+/*
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/api-docs/**",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
+                            "/webjars/**"
+ */
 
 
     public static List<String> prdctTypes = Arrays.asList("BARCODED_PRODUCT","NORMAL_PRODUCT");
@@ -164,6 +180,16 @@ public class CommonUtil {
 //   public static String currentUser(){
 //        return  SecurityContextHolder.getContext().getAuthentication().getName();
 //    }
+
+
+    public static boolean isUrlOpenToAll(String requestUrl){
+          for(String url : CommonUtil.openUrlsLike){
+             if(requestUrl.contains(url)){
+                 return true;
+             }
+          }
+          return false;
+    }
 
 }
 

@@ -40,13 +40,11 @@ public class DynamicPermissionService {
         org.springframework.security.core.userdetails.User  springUser = null;
         SystemUser systemUser = null;
         Set<SystemRole> roleSet=new HashSet<>();
-        SystemRole free = systemRoleRepository.findByName("PERMIT_ALL");
         if(auth!=null){
             springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
             systemUser=userRepository.findByUsername(springUser.getUsername());
             roleSet=systemUser.getRoleList().stream().map(r->r.getRole()).collect(Collectors.toSet());
         }
-        roleSet.add(free);
 
         List<Map<String,Object>> permissions = new ArrayList<>();
 

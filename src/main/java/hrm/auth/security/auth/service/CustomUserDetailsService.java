@@ -3,7 +3,6 @@ package hrm.auth.security.auth.service;
 
 import hrm.auth.userAndRole.entity.SystemUser;
 import hrm.auth.userAndRole.repository.SystemUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
